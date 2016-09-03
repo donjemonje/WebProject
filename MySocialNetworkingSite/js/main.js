@@ -21,7 +21,6 @@ $(document).ready(function () {
             ]
         };
 
-
         var newThumbnail = createPostHtml(postJson);
         $(newThumbnail).insertAfter("#firstThumbnail");
     });
@@ -95,7 +94,7 @@ function createPostHtml(postJson) {
     /* post Actions */
     +'<div style="padding-top: 0.3cm;"></div>'
     +'<div style="height: 1px; background-color: lightgray"></div>'
-    +'<div style="padding-top: 0.2cm; padding-left: 0.2cm; height: 40px">'
+    +'<div style="padding-top: 0.2cm; padding-left: 0.2cm; height: 25px">'
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
             +'<li style="display: block; float: left;"><input type="image" src="../images/main/like_ic.jpg" width="30" height="30" alt="Submit"></li>'
             +'<li style="display: block; float: left; padding-left: 4px; padding-top: 8px;"><div>'+likeCount+'</div></li>'
