@@ -14,6 +14,60 @@ body {
     padding-left: 1rem;
 }
 
+
+
+/* top nav */
+.navbar-blue {
+    border-width:0;
+    background-color:#3B5999;
+    color:#ffffff;
+    font-family:arial,sans-serif;
+    top:0;
+    position:fixed;
+    width:100%;
+}
+
+.navbar-blue li > a,.navbar-toggle  {
+    color:#efefef;
+}
+
+.navbar-blue .dropdown-menu li a {color:#2A4888;}
+.navbar-blue .dropdown-menu li > a {padding-left:30px;}
+
+.navbar-blue li>a:hover, .navbar-blue li>a:focus, .navbar-blue .open, .navbar-blue .open>a, .navbar-blue .open>a:hover, .navbar-blue .open>a:focus {
+    background-color:#2A4888;
+    color:#fff;
+}
+.right-nav {
+    padding-right: 2rem;
+}
+.navbar-toggle, .close {
+    outline:0;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+.logo {
+    display:block;
+    padding:3px;
+    background-color:#fff;
+    color:#3B5999;
+    height:28px;
+    width:54px;
+    margin:9px;
+    margin-right:2px;
+    margin-left:25.2rem;
+    font-size:20px;
+    font-weight:700;
+    text-align:center;
+    text-decoration:none;
+    text-shadow:0 0 1px;
+    border-radius:2px;
+    /*padding-left: 10rem;*/
+}
+
+
 /* Custom page header */
 .header {
     padding-bottom: 1rem;
