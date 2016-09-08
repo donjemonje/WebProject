@@ -136,3 +136,34 @@ body {
         border-bottom: 0;
     }
 }
+
+
+/* Post */
+
+.post {
+    display: block;
+    padding: 4px;
+    height: 500px;
+    margin-bottom: 20px;
+    line-height: .42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+.post > img,
+.post a > img {
+    margin-right: auto;
+    margin-left: auto;
+}
+a.post:hover,
+a.post:focus,
+a.post.active {
+    border-color: #337ab7;
+}
+.post .caption {
+    padding: 9px;
+    color: #333;
+}
