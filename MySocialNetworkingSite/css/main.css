@@ -167,3 +167,14 @@ a.post.active {
     padding: 9px;
     color: #333;
 }
+
+/* Upload Post */
+[contentEditable=true]{
+    /*border:1px solid grey;*/
+}
+
+[contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-ph);
+    color:grey;
+    font-style:italic;
+}
