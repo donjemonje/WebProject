@@ -1,6 +1,6 @@
 ﻿<?php
 session_start();
-
+echo $_SESSION['session_id']; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,12 +47,12 @@ session_start();
         <a  class="navbar-brand logo">M&D</a>
     </div>
     <nav class="collapse navbar-collapse" role="navigation">
-        <form class="navbar-form navbar-left">
+        <form class="navbar-form navbar-left" action='../php/search.php'>
             <div class="input-group input-group-sm" style="max-width:360px;">
-                <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" value="<?php echo $_SESSION['session_id']; ?>">
+                <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" value="">
 				
                 <div class="input-group-btn">
-                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                    <button class="btn btn-default" name="submit_search" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                 </div>
             </div>
         </form>
