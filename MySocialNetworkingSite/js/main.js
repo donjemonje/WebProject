@@ -169,25 +169,25 @@ function createPostHtml(postJson) {
 
 
     /* Post Parsing*/
-    var userName = postJson.userName;
-    var userImagePath = postJson.userImagePath;
+    var userName = "Test";//postJson.userName;
+    var userImagePath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//postJson.userImagePath;
 
-    var postDate = formattedDateStr(postJson.postDate);
+    var postDate = postJson.postDate;// formattedDateStr(postJson.postDate);
 
-    var postText = postJson.postText;
-    var postImgPath = postJson.postImgPath;
-    var likeCount = postJson.likeCount;
+    var postText = postJson.text;
+    var postImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//postJson.postImgPath;
+    var likeCount = "123";//postJson.likeCount;
     var comments = postJson.comments;
-
 
     /* Comments list creation */
     var commentsHtml = "";
     for(var i=0; i<comments.length; i++){
+
         var comment = comments[i];
-        var commentUserName = comment.commentUserName;
-        var commentImgPath = comment.commentImgPath;
-        var commentText = comment.commentText;
-        var commentDate = formattedDateStr(comment.commentDate);
+        var commentUserName = comment.author;
+        var commentImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//comment.commentImgPath;
+        var commentText = comment.text;
+        var commentDate = comment.postDate;
 
         commentsHtml +=
             '<li style="padding-left: 0.2cm; padding-right: 0.2cm; padding-top: 0.5cm">'
