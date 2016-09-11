@@ -84,7 +84,7 @@ echo $_SESSION['session_id'];
                         <ul style="list-style-type: none; overflow: hidden; display: inline;">
                             <li style="display: block; float: left;"><input name="picOneUpload" type="file" accept="image/*" onchange="picUpload(this.files[0])" style="padding-top: 8px"></li>
                             <li style="display: block; float: right; padding-left: 16px; max-width: 490px ;max-height: 300px; ">
-                                <a id="myLink" title="Add" href="#" onclick="uploadPostClicked()" style="display: block;padding-right: 27px;padding-top: 8px;text-align:right";>Post</a>
+                                <a id="myLink" title="Add" href="#" onclick="getPosts()" style="display: block;padding-right: 27px;padding-top: 8px;text-align:right";>Post</a>
                             </li>
                         </ul>
                     </div>

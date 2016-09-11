@@ -95,6 +95,17 @@ window.picUpload = function(frmData) {
 /* Get Posts */
 
 function getPosts() {
+
+$.ajax({  
+                     url:"../php/getPosts.php",  
+                     method:"POST",  
+                     data:{query: "me"},  
+                     success:function(data)  
+                     {
+					 alert(data);                    
+                     }  
+                });
+				
     // var postJson = {
     //     "userName":"Daniel East",
     //     "userImagePath":"../images/main/1425577_1283411931698966_2669253318689249575_n.jpg",
