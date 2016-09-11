@@ -36,13 +36,19 @@ echo $_SESSION['session_id'];
         <a  class="navbar-brand logo">M&D</a>
     </div>
     <nav class="collapse navbar-collapse" role="navigation">
-        <form class="navbar-form navbar-left" action='../php/search.php'>
+        <form class="navbar-form navbar-left" id="searchForm">
             <div class="input-group input-group-sm" style="max-width:360px;">
-                <input type="text" class="form-control" placeholder="Search" name="searchText" id="searchText" autocomplete="off" value="">
-				<div id="nameList"></div>  
+                <input type="text" class="form-control" placeholder="Search" name="searchText" id="searchText" autocomplete="off" value="" list="exampleList">
+                <datalist id="exampleList">
+                </datalist>
                
             </div>
         </form>
+        <ul class="nav navbar-nav">
+            <li>
+                <a href="#" onclick="searchClicked()"><i class="glyphicon glyphicon-search"></i></a>
+            </li>
+        </ul>
         <ul class="nav navbar-nav">
             <li>
                 <a href="profile.html"><i class="glyphicon glyphicon-user"></i> Profile</a>
@@ -106,16 +112,16 @@ echo $_SESSION['session_id'];
                      method:"POST",  
                      data:{query:query},  
                      success:function(data)  
-                     {  
-                          $('#nameList').fadeIn();  
-                          $('#nameList').html(data);  
+                     {
+                          $('#nameList').fadeIn();
+                          $('#exampleList').html('<option value='+ data +'>');
                      }  
                 });  
            }  
       });  
-      $(document).on('click', 'li', function(){  
-           $('#searchText').val($(this).text());  
-           $('#nameList').fadeOut();  
-      });  
+      $(document).on('click', 'li', function(){
+           $('#searchText').val($(this).text());
+           $('#nameList').fadeOut();
+      });
  });  
  </script>  

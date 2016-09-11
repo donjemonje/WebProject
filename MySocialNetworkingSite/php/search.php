@@ -10,19 +10,17 @@
       $output = '';  
       $query = "SELECT * FROM user WHERE username LIKE '%".$_POST["query"]."%'";  
       $result = mysqli_query($db, $query);  
-      $output = '<ul class="list-unstyled">';  
-      if(mysqli_num_rows($result) > 0)  
+      if(mysqli_num_rows($result) > 0)
       {  
            while($row = mysqli_fetch_array($result))  
            {  
-                $output .= '<li>'.$row["username"].'</li>';  
+                $output .= $row["username"];
            }  
       }  
       else  
       {  
-           $output .= '<li>Name Not Found</li>';  
+           $output .= 'Name Not Found';
       }  
-      $output .= '</ul>';  
-      echo $output;  
+      echo $output;
  }  
  ?> 

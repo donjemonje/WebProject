@@ -135,6 +135,10 @@ function addCommentClicked() {
     alert("implement add comment");
 }
 
+function searchClicked() {
+    alert("implement search: --" + document.getElementById("searchText").value + "--");
+}
+
 
 /* Post Html Creation */
 
