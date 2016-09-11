@@ -38,11 +38,9 @@ echo $_SESSION['session_id'];
     <nav class="collapse navbar-collapse" role="navigation">
         <form class="navbar-form navbar-left" action='../php/search.php'>
             <div class="input-group input-group-sm" style="max-width:360px;">
-                <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term" value="">
-				
-                <div class="input-group-btn">
-                    <button class="btn btn-default" name="submit_search" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                </div>
+                <input type="text" class="form-control" placeholder="Search" name="searchText" id="searchText" autocomplete="off" value="">
+				<div id="nameList"></div>  
+               
             </div>
         </form>
         <ul class="nav navbar-nav">
@@ -96,3 +94,28 @@ echo $_SESSION['session_id'];
 
 </body>
 </html>
+
+ <script>  
+ $(document).ready(function(){  
+      $('#searchText').keyup(function(){  
+           var query = $(this).val();  
+           if(query != '')  
+           {  
+                $.ajax({  
+                     url:"../php/search.php",  
+                     method:"POST",  
+                     data:{query:query},  
+                     success:function(data)  
+                     {  
+                          $('#nameList').fadeIn();  
+                          $('#nameList').html(data);  
+                     }  
+                });  
+           }  
+      });  
+      $(document).on('click', 'li', function(){  
+           $('#searchText').val($(this).text());  
+           $('#nameList').fadeOut();  
+      });  
+ });  
+ </script>  
