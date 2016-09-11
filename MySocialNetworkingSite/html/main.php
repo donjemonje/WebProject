@@ -113,15 +113,20 @@ echo $_SESSION['session_id'];
                      data:{query:query},  
                      success:function(data)  
                      {
-                          $('#nameList').fadeIn();
-                          $('#exampleList').html('<option value='+ data +'>');
-                     }  
+
+                         var jsonData = JSON.parse(data);
+                         var htnlRes = "";
+                         for (var i = 0; i < jsonData.length; i++) {
+                             var counter = jsonData[i];
+                             htnlRes += '<option value='+ counter +'>';
+                         }
+                         $('#exampleList').html(htnlRes);
+
+
+                     }
                 });  
            }  
       });  
-      $(document).on('click', 'li', function(){
-           $('#searchText').val($(this).text());
-           $('#nameList').fadeOut();
-      });
+
  });  
  </script>  
