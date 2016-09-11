@@ -124,7 +124,19 @@ function uploadPostClicked() {
         "postText": postTextField.innerText,
         "postImg": cnvs.toDataURL(),
     };
-    alert("implement upload POST");
+	
+	$.ajax({  
+                     url:"../php/post.php",  
+                     method:"POST",  
+                     data:{query: postJson },  
+                     success:function(data)  
+                     {
+					 alert(data);
+                          //$('#nameList').fadeIn();
+                          //$('#exampleList').html('<option value='+ data +'>');
+                     }  
+                });
+    //alert("implement upload POST");
 }
 
 function shareClicked() {

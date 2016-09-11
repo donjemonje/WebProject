@@ -2,22 +2,28 @@
 	session_start();
 
 	include_once 'db/connect.php';
-
-	$userid = $_SESSION['session_id']; 
-	$text = "This is another post";
-	$pic = "1.jpg";
+	 if(isset($_POST["query"]))  
+	 { 
+		$json= $_POST['query'];
 	
-	$stmt= $db->prepare("INSERT INTO post(text, image, author_id) VALUES (?, ?, ?)");
-	$stmt->bind_param("sss", $text, $pic, $userid);
+		$userid = $_SESSION['session_id']; 
+		$text = $json['postText'];
+		$pic = $json['postImg'];
+		
+		//echo json_encode($pic);
+		
+		$stmt= $db->prepare("INSERT INTO post(text, image, author_id) VALUES (?, ?, ?)");
+		$stmt->bind_param("sss", $text, $pic, $userid);
 
-	// execute
-	$stmt->execute();
+		// execute
+		$stmt->execute();
 
-	//header("location: html/main.php");
-	
-	$stmt->close();
-	$db->close();
-	
-	echo "workinggggg"; 
-   
+		//header("location: html/main.php");
+		
+		$stmt->close();
+		$db->close();
+		
+		//echo "workinggggg" + $json;
+		
+	}
  ?> 
