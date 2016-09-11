@@ -60,15 +60,15 @@ if (isset($_POST['register-submit'])) {
     }
     if (!$error) {
         $stmt= $db->prepare("INSERT INTO user(username, password, email) VALUES (?, ?, ?)");
-	$stmt->bind_param("sss", $name, $password, $email);
+		$stmt->bind_param("sss", $name, $password, $email);
 
-	// execute
-	$stmt->execute();
+		// execute
+		$stmt->execute();
 
-	header("location: html/main.php");
-	
-	$stmt->close();
-	$db->close();
+		header("location: html/main.php");
+		
+		$stmt->close();
+		$db->close();
 
     }
 }
