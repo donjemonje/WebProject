@@ -154,6 +154,10 @@ function shareClicked() {
     alert("implement share");
 }
 
+function likeClicked(postId) {
+    alert(postId);
+}
+
 function addCommentClicked() {
     alert("implement add comment");
 }
@@ -173,10 +177,10 @@ function createPostHtml(postJson) {
     var userImagePath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//postJson.userImagePath;
 
     var postDate = postJson.postDate;// formattedDateStr(postJson.postDate);
-
+	var postId = postJson.postid;
     var postText = postJson.text;
     var postImgPath = postJson.postImgPath;
-    var likeCount = "123";//postJson.likeCount;
+    var likeCount = postJson.likeCount;
     var comments = postJson.comments;
 
     /* Comments list creation */
@@ -229,7 +233,7 @@ function createPostHtml(postJson) {
         +'<div style="height: 1px; background-color: lightgray"></div>'
         +'<div style="padding-top: 0.2cm; padding-left: 0.2cm; height: 25px">'
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
-        +'<li style="display: block; float: left;"><input type="image" src="../images/main/like_ic.jpg" width="30" height="30" alt="Submit"></li>'
+        +'<li style="display: block; float: left;"><input id='+postId+' type="image" src="../images/main/like_ic.jpg" width="30" height="30" onclick="likeClicked('+ postId +')"></li>'
         +'<li style="display: block; float: left; padding-left: 4px; padding-top: 8px;"><div>'+likeCount+'</div></li>'
         +'<li style="display: block; float: left; padding-left: 14px; padding-top: 8px;"><a id="myLink" title="Share"href="#" onclick="shareClicked();return false;">Share</a></li>'
         +'</ul>'

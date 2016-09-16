@@ -67,6 +67,7 @@
 					'text' => $postRow["text"],
 					'userName' => $user_data["userName"],
 					//'userImagePath' => $user_data["userImage"],	
+					'likeCount' => $postRow["likes"],
 					'comments' => $comment_output,   
 				);
 
