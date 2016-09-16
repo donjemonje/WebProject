@@ -169,13 +169,13 @@ function createPostHtml(postJson) {
 
 
     /* Post Parsing*/
-    var userName = "Test";//postJson.userName;
+    var userName = postJson.userName;
     var userImagePath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//postJson.userImagePath;
 
     var postDate = postJson.postDate;// formattedDateStr(postJson.postDate);
 
     var postText = postJson.text;
-    var postImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//postJson.postImgPath;
+    var postImgPath = postJson.postImgPath;
     var likeCount = "123";//postJson.likeCount;
     var comments = postJson.comments;
 
