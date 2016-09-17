@@ -124,11 +124,39 @@ function uploadPostClicked() {
 }
 
 function shareClicked() {
-    alert("implement share");
+    alert("implement Share");
 }
 
-function addCommentClicked() {
-    alert("implement add comment");
+function addCommentClicked(postId) {
+    var commentTextField = document.getElementById("commentTextField"+postId);
+    var addACommentJson = {
+        "postId":postId,
+        "commentText": commentTextField.value
+    };
+
+    $.ajax({
+        url:"../php/addAComment.php",
+        method:"POST",
+        data:{query: addACommentJson },
+        success:function(data)
+        {
+            if(data == "success"){
+                $.ajax({
+                    url:"../php/getAPost.php",
+                    method:"POST",
+                    data:{query: {"postId": postId} },
+                    success:function(data)
+                    {
+                        var postJson = JSON.parse(data);
+                        var postHtml = createPostHtml(postJson);
+                        var postThumbnail = document.getElementById("postThumbnail"+postId);
+                        postThumbnail.innerHTML = postHtml;
+                        postThumbnail.fadeIn();
+                    }
+                });
+            }
+        }
+    });
 }
 
 function searchClicked() {
@@ -142,6 +170,7 @@ function createPostHtml(postJson) {
 
 
     /* Post Parsing*/
+    var postId = postJson.postid;
     var userName = "Test";//postJson.userName;
     var userImagePath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//postJson.userImagePath;
 
@@ -156,31 +185,15 @@ function createPostHtml(postJson) {
     var commentsHtml = "";
     if(comments instanceof Array){
         for(var i=0; i<comments.length; i++){
-
             var comment = comments[i];
-            var commentUserName = comment.author;
-            var commentImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//comment.commentImgPath;
-            var commentText = comment.text;
-            var commentDate = comment.postDate;
-
-            commentsHtml +=
-                '<li style="padding-left: 0.2cm; padding-right: 0.2cm; padding-top: 0.5cm">'
-                +'<div>'
-                +'<img src='+commentImgPath+' alt="..."  width="40" height="40" align="left" style="padding-right: 0.1cm">'
-                +commentUserName+':'
-                +'<br>'
-                +commentText
-                +'<br>'
-                +commentDate
-                +'</div>'
-                +'</li>';
+            commentsHtml += createCommentHtmlFromCommentJson(comment)
         }
     }
 
 
     var postHtml =
 
-        '<div class="thumbnail"> '
+        '<div class="thumbnail" id="postThumbnail'+postId+'"> '
 
         /* post Details */
         +'<div style="height: 40px">'
@@ -205,7 +218,7 @@ function createPostHtml(postJson) {
         +'<div style="height: 1px; background-color: lightgray"></div>'
         +'<div style="padding-top: 0.2cm; padding-left: 0.2cm; height: 25px">'
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
-        +'<li style="display: block; float: left;"><input type="image" src="../images/main/like_ic.jpg" width="30" height="30" alt="Submit"></li>'
+        +'<li style="display: block; float: left;"><input type="image" src="../images/main/like_ic.jpg" width="30" height="30" onclick="shareClicked()" ></li>'
         +'<li style="display: block; float: left; padding-left: 4px; padding-top: 8px;"><div>'+likeCount+'</div></li>'
         +'<li style="display: block; float: left; padding-left: 14px; padding-top: 8px;"><a id="myLink" title="Share"href="#" onclick="shareClicked();return false;">Share</a></li>'
         +'</ul>'
@@ -222,14 +235,35 @@ function createPostHtml(postJson) {
         +'<div style="height: 40px; background-color: #f5f5f5">'
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
         +'<li style="display: block; float: left;"><img src="../images/main/1425577_1283411931698966_2669253318689249575_n.jpg" alt="..."  width="40" align="left" style="max-height:100%"></li>'
-        +'<li style="display: block; float: left; padding-left: 16px; padding-top: 8px; "><input type="text" id="commentTextField" style="width: 250%" placeholder="Add a comment..."></li>'
-        +'<li style="display: block; float: right; padding-right: 10px; padding-top: 11px;"><a id="myLink" title="Add"href="#" onclick="addCommentClicked();return false;">Add</a></li>'
+        +'<li style="display: block; float: left; padding-left: 16px; padding-top: 8px; "><input type="text" id="commentTextField'+postId+"\""+' style="width: 250%" placeholder="Add a comment..."></li>'
+        +'<li style="display: block; float: right; padding-right: 10px; padding-top: 11px;"><a id="myLink" title="Add"href="#" onclick="addCommentClicked('+postId+');return false;">Add</a></li>'
         +'</ul>'
         +'</div>'
 
         +'</div>';
 
     return postHtml;
+}
+
+function createCommentHtmlFromCommentJson(commentJson) {
+    var commentUserName = commentJson.author;
+    var commentImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//comment.commentImgPath;
+    var commentText = commentJson.text;
+    var commentDate = commentJson.postDate;
+
+    var commentsHtml =
+        '<li style="padding-left: 0.2cm; padding-right: 0.2cm; padding-top: 0.5cm">'
+        +'<div>'
+        +'<img src='+commentImgPath+' alt="..."  width="40" height="40" align="left" style="padding-right: 0.1cm">'
+        +commentUserName+':'
+        +'<br>'
+        +commentDate
+        +'<br>'
+        +commentText
+        +'</div>'
+        +'</li>';
+
+    return commentsHtml;
 }
 
 /* Helpers */
