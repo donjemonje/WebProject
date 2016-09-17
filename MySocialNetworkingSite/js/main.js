@@ -36,6 +36,8 @@ $('div').focus(function() {
     }
 });
 
+var selectedImgdataURL = "";
+
 window.picUpload = function(frmData) {
     console.log("picUpload ran: " + frmData);
 
@@ -57,6 +59,7 @@ window.picUpload = function(frmData) {
 
     console.log('img: ' + img);
 
+    img.crossOrigin = 'Anonymous';
     img.onload = function() {
         var picWidth = this.width;
         var picHeight = this.height;
@@ -75,11 +78,13 @@ window.picUpload = function(frmData) {
         //You must change the width and height settings in order to decrease the image size, but
         //it needs to be proportional to the original dimensions.
         console.log('This is BEFORE the DRAW IMAGE');
-        ctx.drawImage(img,0,0, 400, newHeight);
-
+        ctx.drawImage(this,0,0, 400, newHeight);
+        selectedImgdataURL = cnvs.toDataURL();
+        // console.log('###: ' + selectedImgdataURL);
         console.log('THIS IS AFTER THE DRAW IMAGE!');
 
     };
+
 }
 
 // $(document).mouseup(function (e)
@@ -92,39 +97,6 @@ window.picUpload = function(frmData) {
     // }
 // });
 
-/* Get Posts */
-
-function getPosts() {
-
-$.ajax({  
-                     url:"../php/getPosts.php",  
-                     method:"POST",  
-                     data:{query: "me"},  
-                     success:function(data)  
-                     {
-					 alert(data);                    
-                     }  
-                });
-				
-    // var postJson = {
-    //     "userName":"Daniel East",
-    //     "userImagePath":"../images/main/1425577_1283411931698966_2669253318689249575_n.jpg",
-    //     "postDate": new Date(new Date().setDate(new Date().getDate()-1)),
-    //     "postText": '-Post Text- bla blla bla <br> blaalsdkalsd',
-    //     "postImgPath":"../images/main/little-mermaid.jpg",
-    //     "likeCount":"130",
-    //     "comments":[
-    //         {"commentUserName":"Jorgio","commentImgPath":"../images/main/1425577_1283411931698966_2669253318689249575_n.jpg", "commentText":"dhasjkdgdadas","commentDate":new Date(new Date().setDate(new Date().getDate()-1))},
-    //         {"commentUserName":"Jorgio","commentImgPath":"../images/main/1425577_1283411931698966_2669253318689249575_n.jpg", "commentText":"dhasjkdgdadas","commentDate":new Date(new Date().setDate(new Date().getDate()-1))},
-    //         {"commentUserName":"Jorgio","commentImgPath":"../images/main/1425577_1283411931698966_2669253318689249575_n.jpg", "commentText":"dhasjkdgdadas","commentDate":new Date(new Date().setDate(new Date().getDate()-1))},
-    //     ]
-    // };
-    //
-    // var newThumbnail = createPostHtml(postJson);
-    // $(newThumbnail).insertAfter("#firstThumbnail");
-}
-
-
 /* Click Events */
 
 function uploadPostClicked() {
@@ -133,21 +105,22 @@ function uploadPostClicked() {
     var postJson = {
         "userId":"TODO",
         "postText": postTextField.innerText,
-        "postImg": cnvs.toDataURL(),
+        "postImg": selectedImgdataURL,
     };
-	
-	$.ajax({  
-                     url:"../php/post.php",  
-                     method:"POST",  
-                     data:{query: postJson },  
-                     success:function(data)  
+    console.log("selectedImgdataURL: " + selectedImgdataURL);
+    selectedImgdataURL = "";
+	$.ajax({
+                     url:"../php/post.php",
+                     method:"POST",
+                     data:{query: postJson },
+                     success:function(data)
                      {
-					 alert(data);
+                         location.reload();
+					 //alert(data);
                           //$('#nameList').fadeIn();
                           //$('#exampleList').html('<option value='+ data +'>');
-                     }  
+                     }
                 });
-    //alert("implement upload POST");
 }
 
 function shareClicked() {
@@ -155,15 +128,35 @@ function shareClicked() {
 }
 
 function likeClicked(postId) {
-    alert(postId);
+    var postId = postId;
+	$.ajax({
+                     url:"../php/like.php",
+                     method:"POST",
+                     data:{query: postId },
+                     success:function()
+                     {
+                         location.reload();
+                     }
+                });
 }
 
 function addCommentClicked() {
     alert("implement add comment");
 }
 
-function searchClicked() {
-    alert("implement search: --" + document.getElementById("searchText").value + "--");
+function addFriend() {
+	var friendName = document.getElementById("searchText").value;
+		$.ajax({
+			url:"../php/addFriend.php",
+			method:"POST",
+			data:{query: friendName },
+			success:function(data)
+			{
+				//location.reload();
+				alert(data);
+			}
+		});
+    //alert("implement search: --" + document.getElementById("searchText").value + "--");
 }
 
 
@@ -185,26 +178,29 @@ function createPostHtml(postJson) {
 
     /* Comments list creation */
     var commentsHtml = "";
-    for(var i=0; i<comments.length; i++){
+    if(comments instanceof Array){
+        for(var i=0; i<comments.length; i++){
 
-        var comment = comments[i];
-        var commentUserName = comment.author;
-        var commentImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//comment.commentImgPath;
-        var commentText = comment.text;
-        var commentDate = comment.postDate;
+            var comment = comments[i];
+            var commentUserName = comment.author;
+            var commentImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//comment.commentImgPath;
+            var commentText = comment.text;
+            var commentDate = comment.postDate;
 
-        commentsHtml +=
-            '<li style="padding-left: 0.2cm; padding-right: 0.2cm; padding-top: 0.5cm">'
-            +'<div>'
-            +'<img src='+commentImgPath+' alt="..."  width="40" height="40" align="left" style="padding-right: 0.1cm">'
-            +commentUserName+':'
-            +'<br>'
-            +commentText
-            +'<br>'
-            +commentDate
-            +'</div>'
-            +'</li>';
+            commentsHtml +=
+                '<li style="padding-left: 0.2cm; padding-right: 0.2cm; padding-top: 0.5cm">'
+                +'<div>'
+                +'<img src='+commentImgPath+' alt="..."  width="40" height="40" align="left" style="padding-right: 0.1cm">'
+                +commentUserName+':'
+                +'<br>'
+                +commentText
+                +'<br>'
+                +commentDate
+                +'</div>'
+                +'</li>';
+        }
     }
+
 
     var postHtml =
 

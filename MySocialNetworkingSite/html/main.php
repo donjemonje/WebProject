@@ -39,14 +39,12 @@ echo $_SESSION['session_id'];
         <form class="navbar-form navbar-left" id="searchForm">
             <div class="input-group input-group-sm" style="max-width:360px;">
                 <input type="text" class="form-control" placeholder="Search" name="searchText" id="searchText" autocomplete="off" value="" list="exampleList">
-                <datalist id="exampleList">
-                </datalist>
-               
+                <datalist id="exampleList"></datalist>
             </div>
         </form>
         <ul class="nav navbar-nav">
             <li>
-                <a href="#" onclick="searchClicked()"><i class="glyphicon glyphicon-search"></i></a>
+                <a href="#" onclick="addFriend()"><i class="glyphicon glyphicon-plus"></i></a>
             </li>
         </ul>
         <ul class="nav navbar-nav">

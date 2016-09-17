@@ -2,11 +2,25 @@
 	session_start();
 
 	include_once 'db/connect.php';
+	$error = false;
 	 if($_POST["query"] == "me")  
-	 { 
-		$output = array();
+	{
 		$postsQuery = "SELECT * FROM post WHERE author_id LIKE  '%".$_SESSION['session_id']."%'";  
+	}
+	elseif($_POST["query"] == "friends")  
+	{
+		$postsQuery = "SELECT * FROM post WHERE author_id LIKE  '%".$_SESSION['session_id']."%'";  
+	}
+	else 
+		$error = true;
+	
+	if($error == false)
+	{
+		$comment_output = array();
+		$output = array();
 		
+		
+			
 		$result = mysqli_query($db, $postsQuery);
 		
 		if(mysqli_num_rows($result) > 0)
@@ -107,6 +121,6 @@
 		
 		//echo "workinggggg" + $json;
 		*/
+	
 	}
-	 
  ?> 
