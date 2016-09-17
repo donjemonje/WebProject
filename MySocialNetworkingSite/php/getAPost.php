@@ -26,9 +26,10 @@
 
             $post_data = array(
                 'postid' => $row["id"],
-                'Image' => $row["image"],
+                'postImgPath' => $row["image"],
                 'postDate' => $row["date"],
                 'text' => $row["text"],
+				'likeCount' => $row["likes"],
                 'author' => $row["author_id"],
                 'comments' => $comment_output,
                 //	'postImgPath' => $rowUSer["userName"],

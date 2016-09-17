@@ -127,6 +127,21 @@ function shareClicked() {
     alert("implement Share");
 }
 
+
+function likeClicked(postId) {
+    var postId = postId;
+	$.ajax({
+                     url:"../php/like.php",
+                     method:"POST",
+                     data:{query: postId },
+                     success:function()
+                     {
+                         location.reload();
+                     }
+                });
+}
+
+
 function addCommentClicked(postId) {
     var commentTextField = document.getElementById("commentTextField"+postId);
     var addACommentJson = {
@@ -159,8 +174,19 @@ function addCommentClicked(postId) {
     });
 }
 
-function searchClicked() {
-    alert("implement search: --" + document.getElementById("searchText").value + "--");
+function addFriend() {
+	var friendName = document.getElementById("searchText").value;
+		$.ajax({
+			url:"../php/addFriend.php",
+			method:"POST",
+			data:{query: friendName },
+			success:function(data)
+			{
+				//location.reload();
+				alert(data);
+			}
+		});
+    //alert("implement search: --" + document.getElementById("searchText").value + "--");
 }
 
 
@@ -170,15 +196,15 @@ function createPostHtml(postJson) {
 
 
     /* Post Parsing*/
+    var userName = postJson.userName;
     var postId = postJson.postid;
     var userName = "Test";//postJson.userName;
     var userImagePath = "../images/main/no-profile-pic.jpg";//postJson.userImagePath;
-
     var postDate = postJson.postDate;// formattedDateStr(postJson.postDate);
-
+	var postId = postJson.postid;
     var postText = postJson.text;
-    var postImgPath = postJson.Image;
-    var likeCount = "123";//postJson.likeCount;
+    var postImgPath = postJson.postImgPath;
+    var likeCount = postJson.likeCount;
     var comments = postJson.comments;
 
     /* Comments list creation */
@@ -218,7 +244,7 @@ function createPostHtml(postJson) {
         +'<div style="height: 1px; background-color: lightgray"></div>'
         +'<div style="padding-top: 0.2cm; padding-left: 0.2cm; height: 25px">'
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
-        +'<li style="display: block; float: left;"><input type="image" src="../images/main/like_ic.jpg" width="30" height="30" onclick="shareClicked()" ></li>'
+        +'<li style="display: block; float: left;"><input id='+postId+' type="image" src="../images/main/like_ic.jpg" width="30" height="30" onclick="likeClicked('+ postId +')"></li>'
         +'<li style="display: block; float: left; padding-left: 4px; padding-top: 8px;"><div>'+likeCount+'</div></li>'
         +'<li style="display: block; float: left; padding-left: 14px; padding-top: 8px;"><a id="myLink" title="Share"href="#" onclick="shareClicked();return false;">Share</a></li>'
         +'</ul>'
