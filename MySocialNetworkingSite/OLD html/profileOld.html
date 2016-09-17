@@ -65,7 +65,15 @@
 
 
         <div class="jumbotron">
-            <img src="../images/main/1425577_1283411931698966_2669253318689249575_n.jpg" alt="...">
+            <img src="../images/main/no-profile-pic.jpg" alt="...">
+            <div style="height: 30px;">
+                <ul style="list-style-type: none; overflow: hidden; display: inline;">
+                    <li style="display: block; float: left;"><input name="picOneUpload" type="file" accept="image/*" onchange="picUpload(this.files[0])" style="padding-top: 8px"></li>
+                    <li style="display: block; float: right; padding-left: 16px; max-width: 490px ;max-height: 300px; ">
+                        <a id="myLink" title="Add" href="#" onclick="uploadPostClicked()" style="display: block;padding-right: 27px;padding-top: 8px;text-align:right";>Post</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
 

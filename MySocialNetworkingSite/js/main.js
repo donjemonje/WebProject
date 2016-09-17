@@ -172,7 +172,7 @@ function createPostHtml(postJson) {
     /* Post Parsing*/
     var postId = postJson.postid;
     var userName = "Test";//postJson.userName;
-    var userImagePath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//postJson.userImagePath;
+    var userImagePath = "../images/main/no-profile-pic.jpg";//postJson.userImagePath;
 
     var postDate = postJson.postDate;// formattedDateStr(postJson.postDate);
 
@@ -234,7 +234,7 @@ function createPostHtml(postJson) {
         +'<div style="padding-top: 0.3cm;"></div>'
         +'<div style="height: 40px; background-color: #f5f5f5">'
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
-        +'<li style="display: block; float: left;"><img src="../images/main/1425577_1283411931698966_2669253318689249575_n.jpg" alt="..."  width="40" align="left" style="max-height:100%"></li>'
+        +'<li style="display: block; float: left;"><img src="../images/main/no-profile-pic.jpg" alt="..."  width="40" align="left" style="max-height:100%"></li>'
         +'<li style="display: block; float: left; padding-left: 16px; padding-top: 8px; "><input type="text" id="commentTextField'+postId+"\""+' style="width: 250%" placeholder="Add a comment..."></li>'
         +'<li style="display: block; float: right; padding-right: 10px; padding-top: 11px;"><a id="myLink" title="Add"href="#" onclick="addCommentClicked('+postId+');return false;">Add</a></li>'
         +'</ul>'
@@ -247,7 +247,7 @@ function createPostHtml(postJson) {
 
 function createCommentHtmlFromCommentJson(commentJson) {
     var commentUserName = commentJson.author;
-    var commentImgPath = "../images/main/1425577_1283411931698966_2669253318689249575_n.jpg";//comment.commentImgPath;
+    var commentImgPath = "../images/main/no-profile-pic.jpg";//comment.commentImgPath;
     var commentText = commentJson.text;
     var commentDate = commentJson.postDate;
 

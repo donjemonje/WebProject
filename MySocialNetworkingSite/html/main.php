@@ -1,6 +1,6 @@
 ﻿<?php
 session_start();
-echo $_SESSION['session_id']; 
+echo $_SESSION['session_id'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +41,7 @@ echo $_SESSION['session_id'];
                 <input type="text" class="form-control" placeholder="Search" name="searchText" id="searchText" autocomplete="off" value="" list="exampleList">
                 <datalist id="exampleList">
                 </datalist>
-               
+
             </div>
         </form>
         <ul class="nav navbar-nav">
@@ -51,7 +51,7 @@ echo $_SESSION['session_id'];
         </ul>
         <ul class="nav navbar-nav">
             <li>
-                <a href="profile.html"><i class="glyphicon glyphicon-user"></i> Profile</a>
+                <a href="profile.php"><i class="glyphicon glyphicon-user"></i> Profile</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right right-nav">
@@ -73,7 +73,7 @@ echo $_SESSION['session_id'];
 
                     <div style="height: 250px;">
                         <ul style="list-style-type: none; overflow: hidden; display: inline;">
-                            <li style="display: block; float: left;"><img src="../images/main/1425577_1283411931698966_2669253318689249575_n.jpg" alt="..."  width="40" align="left" style="max-height:100%"></li>
+                            <li style="display: block; float: left;"><img src="../images/main/no-profile-pic.jpg" alt="..." width="40" align="left" style="max-height:100%"></li>
                             <li style="display: block; float: left; padding-left: 16px; max-width: 490px ;">
                                 <div id="postTextField" class="editable" contentEditable=true data-ph="What's On Your Mind..." style="max-height:230px;overflow-y: scroll; width: 490px;"></div>
                             </li>
@@ -90,7 +90,7 @@ echo $_SESSION['session_id'];
                     </div>
                 </div>
         </div>
-    
+
 
         <footer class="footer">
             <p>&copy; Meital & Daniel 2016</p>
@@ -101,17 +101,17 @@ echo $_SESSION['session_id'];
 </body>
 </html>
 
- <script>  
- $(document).ready(function(){  
-      $('#searchText').keyup(function(){  
-           var query = $(this).val();  
-           if(query != '')  
-           {  
-                $.ajax({  
-                     url:"../php/search.php",  
-                     method:"POST",  
-                     data:{query:query},  
-                     success:function(data)  
+ <script>
+ $(document).ready(function(){
+      $('#searchText').keyup(function(){
+           var query = $(this).val();
+           if(query != '')
+           {
+                $.ajax({
+                     url:"../php/search.php",
+                     method:"POST",
+                     data:{query:query},
+                     success:function(data)
                      {
 
                          var jsonData = JSON.parse(data);
@@ -124,11 +124,11 @@ echo $_SESSION['session_id'];
 
 
                      }
-                });  
-           }  
-      });  
+                });
+           }
+      });
 
- });  
+ });
  </script>
 
 <script>
@@ -147,7 +147,6 @@ echo $_SESSION['session_id'];
                     var htmlWall = createPostHtml(post);
                     $(htmlWall).insertAfter("#firstThumbnail");
                 }
-
 
             }
         });
