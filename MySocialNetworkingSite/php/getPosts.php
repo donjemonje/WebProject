@@ -46,7 +46,7 @@
 						{
 							$user_data = array(
 							'userName' => $userRow["username"],
-							//'userImage' => $userRow["userimage"],
+							'userImage' => $userRow["image"],
 							);
 						}
 						$comment_data = array(
@@ -55,7 +55,7 @@
 							'postDate' => $commentRow["time"],
 							'text' => $commentRow["text"],
 							'author' => $user_data["userName"],
-							//'commentImgPath' => $user_data["userImage"],					   
+							'commentImgPath' => $user_data["userImage"],					   
 						);
 						
 						$comment_output[] = $comment_data;
@@ -69,7 +69,7 @@
 				{
 					$user_data = array(
 					'userName' => $userRow["username"],
-					//'userImage' => $userRow["userimage"],
+					'userImage' => $userRow["image"],
 					);
 				
 				}
@@ -80,7 +80,7 @@
 					'postDate' => $postRow["date"],
 					'text' => $postRow["text"],
 					'userName' => $user_data["userName"],
-					//'userImagePath' => $user_data["userImage"],	
+					'userImagePath' => $user_data["userImage"],	
 					'likeCount' => $postRow["likes"],
 					'comments' => $comment_output,   
 				);

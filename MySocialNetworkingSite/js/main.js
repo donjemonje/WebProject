@@ -198,9 +198,9 @@ function createPostHtml(postJson) {
     /* Post Parsing*/
     var userName = postJson.userName;
     var postId = postJson.postid;
-    var userName = "Test";//postJson.userName;
-    var userImagePath = "../images/main/no-profile-pic.jpg";//postJson.userImagePath;
-    var postDate = postJson.postDate;// formattedDateStr(postJson.postDate);
+    var userName = postJson.userName;
+    var userImagePath = postJson.userImagePath === null ? "../images/main/no-profile-pic.jpg": postJson.userImagePath;
+    var postDate = postJson.postDate;
 	var postId = postJson.postid;
     var postText = postJson.text;
     var postImgPath = postJson.postImgPath;
@@ -273,7 +273,7 @@ function createPostHtml(postJson) {
 
 function createCommentHtmlFromCommentJson(commentJson) {
     var commentUserName = commentJson.author;
-    var commentImgPath = "../images/main/no-profile-pic.jpg";//comment.commentImgPath;
+    var commentImgPath = comment.commentImgPath === null ? "../images/main/no-profile-pic.jpg" : comment.commentImgPath;
     var commentText = commentJson.text;
     var commentDate = commentJson.postDate;
 
