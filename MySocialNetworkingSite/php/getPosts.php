@@ -3,7 +3,7 @@
 
 	include_once 'db/connect.php';
 	$error = false;
-	 if($_POST["query"] == "me")  
+	if($_POST["query"] == "me")  
 	{
 		$postsQuery = "SELECT * FROM post WHERE author_id LIKE  '%".$_SESSION['session_id']."%'";  
 	}
