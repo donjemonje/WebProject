@@ -35,7 +35,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $mail = $query['mail'];
 
     $apos= '\'';
-    $sql = "UPDATE user SET image=".$apos.$image.$apos.", email=".$apos.$mail.$apos." WHERE id=".$userid;
+    $sql = "UPDATE user SET image=".$apos.$image.$apos;
+    if($mail != null){
+       $sql .= ", email=".$apos.$mail.$apos;
+    }
+    $sql .= " WHERE id=".$userid;
+    
     $stmt= $db->prepare($sql);
 
     // execute
