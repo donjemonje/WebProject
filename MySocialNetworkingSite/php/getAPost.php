@@ -6,7 +6,12 @@
  * Time: 2:22 PM
  */
 
-    session_start();
+	include 'getPosts.php';
+
+    if(session_status() != PHP_SESSION_ACTIVE){
+        session_start();
+    }
+
 
     include_once 'db/connect.php';
     $json= $_POST['query'];
@@ -29,69 +34,15 @@
 			
 			while($userRow = mysqli_fetch_array($userResult))  
 			{
-				$user_data = array(
-				'userName' => $userRow["username"],
-				'userImage' => $userRow["image"],
-				);
-			
+				$user_data = getUserDataForUserRow($userRow);
 			}
-					
-			$post_data = array(
-				'postid' => $postRow["id"],
-				'postImgPath' => $postRow["image"],
-				'postDate' => $postRow["date"],
-				'text' => $postRow["text"],
-				'userName' => $user_data["userName"],
-				'userImagePath' => $user_data["userImage"],	
-				'likeCount' => $postRow["likes"],
-				'comments' => $comment_output,   
-			);
+
+			$post_data = getPostDataFor($postRow, $user_data, $comment_output);
+			
         }
     }
 
     echo json_encode($post_data);
-
-
-
-
-
-
-    function getCommentsForPostId($postId, $db)
-    {
-        $commentsQuery = "SELECT * FROM comment WHERE post_id LIKE  '%".$postId."%'";  
-		$commentsResult = mysqli_query($db, $commentsQuery);
-		$comment_output = array();
-
-		if(mysqli_num_rows($commentsResult) > 0)
-		{  
-
-			while($commentRow = mysqli_fetch_array($commentsResult))  
-			{
-				$userQuery = "SELECT * FROM user WHERE id LIKE  '%".$commentRow["author"]."%'";  
-				$userResult = mysqli_query($db, $userQuery);
-				
-				while($userRow = mysqli_fetch_array($userResult))  
-				{
-					$user_data = array(
-					'userName' => $userRow["username"],
-					'userImage' => $userRow["image"],
-					);
-				}
-				
-				$comment_data = array(
-					'id' => $commentRow["id"],
-					'postid' => $commentRow["post_id"],
-					'postDate' => $commentRow["time"],
-					'text' => $commentRow["text"],
-					'author' => $user_data["userName"],
-					'commentImgPath' => $user_data["userImage"],					   
-				);
-				
-				$comment_output[] = $comment_data;
-			}
-		}
-		return $comment_output;
-    }
 
 
  ?>

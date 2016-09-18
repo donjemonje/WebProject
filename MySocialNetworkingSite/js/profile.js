@@ -2,6 +2,8 @@
  * Created by danieleast on 17/09/2016.
  */
 
+/* Click  Events    */
+
 window.profilePicUpload = function(frmData) {
     console.log("picUpload ran: " + frmData);
 
@@ -42,6 +44,27 @@ function uploadProfileImageClicked() {
         success:function(data)
         {
             location.reload();
+        }
+    });
+}
+
+function changePrivacyClicked(postId, isOn) {
+    console.log("changePrivacyClicked: postId: " + postId + ", set privacy: " + (isOn ? "ON" :"OFF"));
+
+    var params = {
+        "postId":postId,
+        "isPrivate": isOn ? "0" : "1",
+    };
+    $.ajax({
+        url:"../php/changePrivacy.php",
+        method:"POST",
+        data:{query: params },
+        success:function(data)
+        {
+            if(data === "success"){
+                reloadPost(postId);
+            }
+
         }
     });
 }

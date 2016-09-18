@@ -87,27 +87,20 @@ window.picUpload = function(frmData) {
 
 }
 
-// $(document).mouseup(function (e)
-// {
-    // var postTextField = $("#postTextField");
-    //
-    // if (!postTextField.is(e.target) // if the target of the click isn't the container...
-    //     && postTextField.has(e.target).length === 0) // ... nor a descendant of the container
-    // {
-    // }
-// });
-
 /* Click Events */
 
 function uploadPostClicked() {
     var postTextField = document.getElementById("postTextField");
     var cnvs = document.getElementById("cnvsForFormat");
+    var privacyImage = document.getElementById("privacyImage");
     var postJson = {
-        "userId":"TODO",
         "postText": postTextField.innerText,
         "postImg": selectedImgdataURL,
+        "isPrivate": privacyImage.value,
     };
-    console.log("selectedImgdataURL: " + selectedImgdataURL);
+
+    console.log("uploadPostParmas: " + JSON.stringify(postJson));
+
     selectedImgdataURL = "";
 	$.ajax({
                      url:"../php/post.php",
@@ -116,9 +109,6 @@ function uploadPostClicked() {
                      success:function(data)
                      {
                          location.reload();
-					 //alert(data);
-                          //$('#nameList').fadeIn();
-                          //$('#exampleList').html('<option value='+ data +'>');
                      }
                 });
 }
@@ -145,6 +135,12 @@ function likeClicked(postId) {
                 });
 }
 
+function setPostPrivacy() {
+    var privacyImage = document.getElementById("privacyImage");
+    privacyImage.value = privacyImage.value == "0" ? "1" : "0";
+    privacyImage.src = privacyImage.value == "0" ? "../images/main/Unlock-96.png" : "../images/main/Lock-96.png";
+    console.log("setPostPrivacy: to: " + privacyImage.value);
+}
 
 function addCommentClicked(postId) {
     var commentTextField = document.getElementById("commentTextField"+postId);
@@ -160,19 +156,7 @@ function addCommentClicked(postId) {
         success:function(data)
         {
             if(data == "success"){
-                $.ajax({
-                    url:"../php/getAPost.php",
-                    method:"POST",
-                    data:{query: {"postId": postId} },
-                    success:function(data)
-                    {
-                        var postJson = JSON.parse(data);
-                        var postHtml = createPostHtml(postJson);
-                        var postThumbnail = document.getElementById("postThumbnail"+postId);
-                        postThumbnail.innerHTML = postHtml;
-                        postThumbnail.fadeIn();
-                    }
-                });
+                reloadPost(postId);
             }
         }
     });
@@ -193,21 +177,39 @@ function addFriend() {
     //alert("implement search: --" + document.getElementById("searchText").value + "--");
 }
 
+/* Reload Data */
+
+function reloadPost(postId) {
+    $.ajax({
+        url:"../php/getAPost.php",
+        method:"POST",
+        data:{query: {"postId": postId} },
+        success:function(data)
+        {
+            var postJson = JSON.parse(data);
+            var showPrivacy = document.getElementById("postPrivacy"+postId) !== null;
+            var postHtml = createPostHtml(postJson, showPrivacy);
+            var postThumbnail = document.getElementById("postThumbnail"+postId);
+            postThumbnail.innerHTML = postHtml;
+            $("#"+"postThumbnail"+postId).fadeOut();
+            $("#"+"postThumbnail"+postId).fadeIn();
+        }
+    });
+}
 
 /* Post Html Creation */
 
-function createPostHtml(postJson) {
+function createPostHtml(postJson, showPrivacy) {
 
 
     /* Post Parsing*/
     var userName = postJson.userName;
     var postId = postJson.postid;
-    var userName = postJson.userName;
+    var postIsPrivate = postJson.isPrivate == "true";
     var userImagePath = postJson.userImagePath === null ? "../images/main/no-profile-pic.jpg": postJson.userImagePath;
     var postDate = postJson.postDate;
-	var postId = postJson.postid;
     var postText = postJson.text;
-    var postImgPath = postJson.postImgPath;
+    var postImgPath = postJson.postImgPath.length == 0 ? "//:0" : postJson.postImgPath;
     var likeCount = postJson.likeCount;
     var comments = postJson.comments;
 
@@ -220,6 +222,11 @@ function createPostHtml(postJson) {
         }
     }
 
+    var privacyHtml ='';
+    if(showPrivacy){
+        var privacyImg = postIsPrivate ? "../images/main/Lock-96.png" : "../images/main/Unlock-96.png";
+        privacyHtml = '<input id="postPrivacy'+postId+'" type="image" src="'+privacyImg +'" width="30" height="30" onclick="changePrivacyClicked('+ postId + ',' + postIsPrivate +')" align="right">';
+    }
 
     var postHtml =
 
@@ -230,10 +237,13 @@ function createPostHtml(postJson) {
         +'<img src='+userImagePath+' alt="..."  width="40" align="left" style="max-height:100%">'
         +'<div style="padding-left: 1.2cm; max-height:100%">'
         +userName
+        +privacyHtml
         +'<br>'
         +postDate
         +'</div>'
+
         +'</div>'
+
 
         /* post Text */
         +'<div style="padding-top: 0.3cm" >'
