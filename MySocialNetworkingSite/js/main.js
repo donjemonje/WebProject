@@ -273,7 +273,7 @@ function createPostHtml(postJson) {
 
 function createCommentHtmlFromCommentJson(commentJson) {
     var commentUserName = commentJson.author;
-    var commentImgPath = comment.commentImgPath === null ? "../images/main/no-profile-pic.jpg" : comment.commentImgPath;
+    var commentImgPath = commentJson.commentImgPath === null ? "../images/main/no-profile-pic.jpg" : commentJson.commentImgPath;
     var commentText = commentJson.text;
     var commentDate = commentJson.postDate;
 
