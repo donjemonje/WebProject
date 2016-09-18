@@ -122,6 +122,7 @@ echo $_SESSION['session_id'];
             data:{query:"me"},
             success:function(data)
             {
+				//alert(data);
                 var postsArr = JSON.parse(data);
                 for (var i = 0; i < postsArr.length; i++) {
                     var post = postsArr[i];

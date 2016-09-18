@@ -20,23 +20,32 @@
     $result = mysqli_query($db, $postsQuery);
     if(mysqli_num_rows($result) > 0)
     {
-        while($row = mysqli_fetch_array($result))
+        while($postRow = mysqli_fetch_array($result))
         {
             $comment_output = getCommentsForPostId($postId, $db);
 
-            $post_data = array(
-                'postid' => $row["id"],
-                'postImgPath' => $row["image"],
-                'postDate' => $row["date"],
-                'text' => $row["text"],
-				'likeCount' => $row["likes"],
-                'author' => $row["author_id"],
-                'comments' => $comment_output,
-                //	'postImgPath' => $rowUSer["userName"],
-                //	'comments' => array(
-                //	'userName' => $rowUSer["userName"],
-                //	)
-            );
+            $userQuery = "SELECT * FROM user WHERE id LIKE  '%".$postRow["author_id"]."%'";  
+			$userResult = mysqli_query($db, $userQuery);
+			
+			while($userRow = mysqli_fetch_array($userResult))  
+			{
+				$user_data = array(
+				'userName' => $userRow["username"],
+				'userImage' => $userRow["image"],
+				);
+			
+			}
+					
+			$post_data = array(
+				'postid' => $postRow["id"],
+				'postImgPath' => $postRow["image"],
+				'postDate' => $postRow["date"],
+				'text' => $postRow["text"],
+				'userName' => $user_data["userName"],
+				'userImagePath' => $user_data["userImage"],	
+				'likeCount' => $postRow["likes"],
+				'comments' => $comment_output,   
+			);
         }
     }
 
@@ -49,31 +58,39 @@
 
     function getCommentsForPostId($postId, $db)
     {
-        $commentsQuery = "SELECT * FROM comment WHERE post_id LIKE  '%".$postId."%'";
-        $commentsResult = mysqli_query($db, $commentsQuery);
+        $commentsQuery = "SELECT * FROM comment WHERE post_id LIKE  '%".$postId."%'";  
+		$commentsResult = mysqli_query($db, $commentsQuery);
+		$comment_output = array();
 
-        $comment_output = array();
+		if(mysqli_num_rows($commentsResult) > 0)
+		{  
 
-        if(mysqli_num_rows($commentsResult) > 0)
-        {
-
-
-            while($commentRow = mysqli_fetch_array($commentsResult))
-            {
-                $comment_data = array(
-                    'id' => $commentRow["id"],
-                    'postid' => $commentRow["post_id"],
-                    'postDate' => $commentRow["time"],
-                    'text' => $commentRow["text"],
-                    'author' => $commentRow["author"],
-
-                );
-
-                $comment_output[] = $comment_data;
-            }
-        }
-
-        return $comment_output;
+			while($commentRow = mysqli_fetch_array($commentsResult))  
+			{
+				$userQuery = "SELECT * FROM user WHERE id LIKE  '%".$commentRow["author"]."%'";  
+				$userResult = mysqli_query($db, $userQuery);
+				
+				while($userRow = mysqli_fetch_array($userResult))  
+				{
+					$user_data = array(
+					'userName' => $userRow["username"],
+					'userImage' => $userRow["image"],
+					);
+				}
+				
+				$comment_data = array(
+					'id' => $commentRow["id"],
+					'postid' => $commentRow["post_id"],
+					'postDate' => $commentRow["time"],
+					'text' => $commentRow["text"],
+					'author' => $user_data["userName"],
+					'commentImgPath' => $user_data["userImage"],					   
+				);
+				
+				$comment_output[] = $comment_data;
+			}
+		}
+		return $comment_output;
     }
 
 
