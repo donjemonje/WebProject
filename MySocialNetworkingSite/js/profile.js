@@ -21,6 +21,7 @@ window.profilePicUpload = function(frmData) {
 
     img.crossOrigin = 'Anonymous';
     img.onload = function() {
+        ctx.clearRect(0, 0, 250, 250);
         ctx.drawImage(this,0,0, 250, 250);
     };
 
