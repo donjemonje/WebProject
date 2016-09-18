@@ -22,10 +22,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         $row = mysqli_fetch_array($result);
         $user = array(
             'email' => $row["email"],
+			'username' => $row["username"],
             'image' => $row["image"]
         );
     }
-
+	$_SESSION['userImg'] = $user["image"];
+	$_SESSION['username'] = $user["username"];
+	
     echo json_encode($user);
 
 } else if ($_SERVER['REQUEST_METHOD'] === 'POST'){

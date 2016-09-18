@@ -109,10 +109,13 @@ echo $_SESSION['session_id'];
                 var ctx = cnvs.getContext("2d");
                 var img = new Image;
                 img.src = user.image == null ? "../images/main/no-profile-pic.jpg" : user.image;
+				
                 img.crossOrigin = 'Anonymous';
                 img.onload = function() {
                     ctx.drawImage(this,0,0, 250, 250);
                 };
+				
+				
             }
         });
 

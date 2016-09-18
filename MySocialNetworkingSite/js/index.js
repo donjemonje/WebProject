@@ -14,5 +14,13 @@
         $(this).addClass('active');
         e.preventDefault();
     });
+	
+		
+	if( $('#email').val().length !== 0 ) {
+	$( "#register-form-link" ).trigger( "click" );
+
+	}
+	
+	
 
 });

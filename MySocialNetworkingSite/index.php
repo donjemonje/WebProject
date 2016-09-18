@@ -14,8 +14,8 @@ if (isset($_POST['login-submit'])) {
 	
 	$username = mysqli_real_escape_string($db,$_POST['username']);
 	$password = mysqli_real_escape_string($db,$_POST['password']); 
-	  
-	$sql = "SELECT id FROM user WHERE username = '$username' and password = '$password'";
+	$newPassword = md5($password);
+	$sql = "SELECT id FROM user WHERE username = '$username' and password = '$newPassword'";
 	$result = mysqli_query($db,$sql);
 	$row = mysqli_fetch_array($result);
 	$id = $row['id'];
@@ -29,8 +29,8 @@ if (isset($_POST['login-submit'])) {
 		$_SESSION['session_id'] = $id;
 		header("location: html/main.php");
 		
-		}else {
-			$loginerror = "Your Login Name or Password is invalid";
+	}else {
+		$loginerror = $newPassword;
 	}
 }
 
@@ -60,7 +60,7 @@ if (isset($_POST['register-submit'])) {
     }
     if (!$error) {
         $stmt= $db->prepare("INSERT INTO user(username, password, email) VALUES (?, ?, ?)");
-		$stmt->bind_param("sss", $name, $password, $email);
+		$stmt->bind_param("sss", $name, md5($password), $email);
 
 		// execute
 		$stmt->execute();
@@ -78,6 +78,7 @@ if (isset($_POST['register-submit'])) {
 		$db->close();
 
     }
+	
 }
 ?>
 <!DOCTYPE html>
@@ -189,5 +190,6 @@ if (isset($_POST['register-submit'])) {
             </div>
         </div>
     </div>
+	
 </body>
 </html>

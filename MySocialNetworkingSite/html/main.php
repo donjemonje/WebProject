@@ -71,7 +71,7 @@ echo $_SESSION['session_id'];
 
                     <div style="height: 250px;">
                         <ul style="list-style-type: none; overflow: hidden; display: inline;">
-                            <li style="display: block; float: left;"><img src="../images/main/no-profile-pic.jpg" alt="..." width="40" align="left" style="max-height:100%"></li>
+                            <li style="display: block; float: left;"><img id="userImg" src= <?php if (isset($_SESSION['userImg'])) echo $_SESSION['userImg']; else echo "../images/main/no-profile-pic.jpg"; ?> alt="..." width="40" align="left" style="max-height:100%"></li>
                             <li style="display: block; float: left; padding-left: 16px; max-width: 490px ;">
                                 <div id="postTextField" class="editable" contentEditable=true data-ph="What's On Your Mind..." style="max-height:230px;overflow-y: scroll; width: 490px;"></div>
                             </li>
@@ -100,6 +100,7 @@ echo $_SESSION['session_id'];
 </html>
 
  <script>
+
  $(document).ready(function(){
       $('#searchText').keyup(function(){
            var query = $(this).val();
