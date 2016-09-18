@@ -190,6 +190,5 @@ if (isset($_POST['register-submit'])) {
             </div>
         </div>
     </div>
-	
 </body>
 </html>

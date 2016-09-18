@@ -129,7 +129,7 @@ echo $_SESSION['session_id'];
                 var postsArr = JSON.parse(data);
                 for (var i = 0; i < postsArr.length; i++) {
                     var post = postsArr[i];
-                    var htmlWall = createPostHtml(post);
+                    var htmlWall = createPostHtml(post, true);
                     $(htmlWall).insertAfter("#firstThumbnail");
                 }
 

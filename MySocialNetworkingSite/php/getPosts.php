@@ -2,7 +2,8 @@
 	session_start();
 
 	include_once 'db/connect.php';
-	
+	include "helpers.php";
+
 	$comment_output = array();
 		$output = array();
 		$usersArray = array();
@@ -36,8 +37,10 @@
 		foreach ($usersArray as $user)
 		{  
 			unset($postsQuery);
-			$postsQuery = "SELECT * FROM post WHERE author_id LIKE '".$user."'";  
-		
+			$postsQuery = "SELECT * FROM post WHERE author_id LIKE '".$user."'";
+			if($_POST["query"] == "friends"){
+				$postsQuery .= "AND isPrivate LIKE 0";
+			}
 			$result = mysqli_query($db, $postsQuery);
 		
 			if(mysqli_num_rows($result) > 0)
@@ -51,27 +54,13 @@
 					$userQuery = "SELECT * FROM user WHERE id LIKE  '%".$postRow["author_id"]."%'";  
 					$userResult = mysqli_query($db, $userQuery);
 					
-					while($userRow = mysqli_fetch_array($userResult))  
+					while($userRow = mysqli_fetch_array($userResult))
 					{
-						$user_data = array(
-						'userName' => $userRow["username"],
-						'userImage' => $userRow["image"],
-						);
-					
+						$user_data = getUserDataForUserRow($userRow);
 					}
-							
-					$post_data = array(
-						'postid' => $postRow["id"],
-						'postImgPath' => $postRow["image"],
-						'postDate' => $postRow["date"],
-						'text' => $postRow["text"],
-						'userName' => $user_data["userName"],
-						'userImagePath' => $user_data["userImage"],	
-						'likeCount' => $postRow["likes"],
-						'comments' => $comment_output,   
-					);
 
-					
+					$post_data = getPostDataFor($postRow, $user_data, $comment_output);
+
 					$output[] = $post_data;
 					
 					unset($comment_data);
@@ -83,7 +72,35 @@
 		}
 		echo json_encode($output);		 
 	}
-	
+
+	function getUserDataForUserRow($userRow)
+	{
+		$user_data = array(
+			'userName' => $userRow["username"],
+			'userImage' => $userRow["image"],
+		);
+		return $user_data;
+
+	}
+
+	function getPostDataFor($postRow, $user_data , $comment_output)
+	{
+		$post_data = array(
+			'postid' => $postRow["id"],
+			'isPrivate' => fromIntToBool($postRow["isPrivate"]),
+			'postImgPath' => $postRow["image"],
+			'postDate' => $postRow["date"],
+			'text' => $postRow["text"],
+			'userName' => $user_data["userName"],
+			'userImagePath' => $user_data["userImage"],
+			'likeCount' => $postRow["likes"],
+			'comments' => $comment_output,
+		);
+		return $post_data;
+
+	}
+
+
 	function getCommentsForPostId($postId, $db)
     {
 		$commentsQuery = "SELECT * FROM comment WHERE post_id LIKE  '%".$postId."%'";  

@@ -9,21 +9,20 @@
 		$userid = $_SESSION['session_id']; 
 		$text = $json['postText'];
 		$pic = $json['postImg'];
+		$isPrivate = $json['isPrivate'];
 		
-		//echo json_encode($pic);
-		
-		$stmt= $db->prepare("INSERT INTO post(text, image, author_id) VALUES (?, ?, ?)");
-		$stmt->bind_param("sss", $text, $pic, $userid);
+
+		$stmt= $db->prepare("INSERT INTO post(text, image, author_id, isPrivate) VALUES (?, ?, ?, ?)");
+		$stmt->bind_param("ssss", $text, $pic, $userid, $isPrivate);
 
 		// execute
 		$stmt->execute();
 
-		//header("location: html/main.php");
-		
+
 		$stmt->close();
 		$db->close();
 		
-		//echo "workinggggg" + $json;
+		echo "success";
 		
 	}
  ?> 
