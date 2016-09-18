@@ -65,6 +65,13 @@ if (isset($_POST['register-submit'])) {
 		// execute
 		$stmt->execute();
 
+		$sql = "SELECT id FROM user WHERE username = '$name'";
+		$result = mysqli_query($db,$sql);
+		$row = mysqli_fetch_array($result);
+		$id = $row['id'];
+		
+		$_SESSION['session_id'] = $id;
+	
 		header("location: html/main.php");
 		
 		$stmt->close();

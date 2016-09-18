@@ -111,7 +111,7 @@ echo $_SESSION['session_id'];
                      data:{query:query},
                      success:function(data)
                      {
-
+		
                          var jsonData = JSON.parse(data);
                          var htnlRes = "";
                          for (var i = 0; i < jsonData.length; i++) {
@@ -135,11 +135,12 @@ echo $_SESSION['session_id'];
         $.ajax({
             url:"../php/getPosts.php",
             method:"POST",
-            data:{query:"me"},
+            data:{query:"friends"},
             success:function(data)
             {
-
-                var postsArr = JSON.parse(data);
+				//alert(data);
+ 
+				var postsArr = JSON.parse(data);
                 for (var i = 0; i < postsArr.length; i++) {
                     var post = postsArr[i];
                     var htmlWall = createPostHtml(post);

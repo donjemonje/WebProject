@@ -134,9 +134,13 @@ function likeClicked(postId) {
                      url:"../php/like.php",
                      method:"POST",
                      data:{query: postId },
-                     success:function()
+                     success:function(data)
                      {
-                         location.reload();
+						var postJson = JSON.parse(data);
+                        var likeThumbnail = document.getElementById("numOfLikes"+postId);
+                        likeThumbnail.innerHTML = data;
+                        likeThumbnail.fadeIn();
+                         //location.reload();
                      }
                 });
 }
@@ -182,8 +186,8 @@ function addFriend() {
 			data:{query: friendName },
 			success:function(data)
 			{
-				//location.reload();
-				alert(data);
+				location.reload();
+				//alert(data);
 			}
 		});
     //alert("implement search: --" + document.getElementById("searchText").value + "--");
@@ -245,7 +249,7 @@ function createPostHtml(postJson) {
         +'<div style="padding-top: 0.2cm; padding-left: 0.2cm; height: 25px">'
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
         +'<li style="display: block; float: left;"><input id='+postId+' type="image" src="../images/main/like_ic.jpg" width="30" height="30" onclick="likeClicked('+ postId +')"></li>'
-        +'<li style="display: block; float: left; padding-left: 4px; padding-top: 8px;"><div>'+likeCount+'</div></li>'
+        +'<li style="display: block; float: left; padding-left: 4px; padding-top: 8px;"><div id="numOfLikes'+postId+'">'+likeCount+'</div></li>'
         +'<li style="display: block; float: left; padding-left: 14px; padding-top: 8px;"><a id="myLink" title="Share"href="#" onclick="shareClicked();return false;">Share</a></li>'
         +'</ul>'
         +'</div>'
@@ -273,7 +277,7 @@ function createPostHtml(postJson) {
 
 function createCommentHtmlFromCommentJson(commentJson) {
     var commentUserName = commentJson.author;
-    var commentImgPath = comment.commentImgPath === null ? "../images/main/no-profile-pic.jpg" : comment.commentImgPath;
+    var commentImgPath = commentJson.commentImgPath === null ? "../images/main/no-profile-pic.jpg" : commentJson.commentImgPath;
     var commentText = commentJson.text;
     var commentDate = commentJson.postDate;
 
