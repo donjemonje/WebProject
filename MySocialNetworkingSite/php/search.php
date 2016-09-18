@@ -23,7 +23,7 @@
 		{  
 			$output .= 'Name Not Found';
 		}
-		echo json_encode($output);
+		//echo json_encode($output);
 	}
 	else {
 		$output = array();

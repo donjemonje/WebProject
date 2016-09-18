@@ -129,7 +129,7 @@ if (isset($_POST['register-submit'])) {
                                 <form id="login-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" role="form" style="display: block;">
 									<span class="text-danger"><?php if (isset($loginerror)) echo $loginerror; ?></span>
                                     <div class="form-group">
-                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="">
+                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" >
                                     </div>
                                     <div class="form-group">
                                         <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password">
@@ -158,21 +158,26 @@ if (isset($_POST['register-submit'])) {
                                 <form id="register-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" role="form" style="display: none;">
 								
                                     <span class="text-danger"><?php if (isset($name_error)) echo $name_error; ?></span>
+                                    <span id="username_r_span"></span>
 									<div class="form-group">
-                                        <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="<?php if($error) echo $name; ?>">
+                                        <input type="text" name="username" id="username_r" tabindex="1" class="form-control" placeholder="Username" value="<?php if($error) echo $name; ?>">
                                     </div>
+                                    <span id="email_span"></span>
                                     <div class="form-group">
                                         <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?php if($error) echo $email; ?>">
+ 
                                     </div>
 									 
 									<span class="text-danger"><?php if (isset($password_error)) echo $password_error; ?></span>
+                                    <span id="password_r_span"></span>
                                     <div class="form-group">
-                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" >
+                                        <input type="password" name="password" id="password_r" tabindex="2" class="form-control" placeholder="Password">
                                     </div>
 									
 									<span class="text-danger"><?php if (isset($cpassword_error)) echo $cpassword_error; ?></span>
+                                    <span id="confirm-password_r_span"></span>
                                     <div class="form-group">
-                                        <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirm Password" >
+                                        <input type="password" name="confirm-password" id="confirm-password_r" tabindex="2" class="form-control" placeholder="Confirm Password">
                                     </div>
 									
                                     <div class="form-group">
@@ -190,5 +195,7 @@ if (isset($_POST['register-submit'])) {
             </div>
         </div>
     </div>
+
+	
 </body>
 </html>

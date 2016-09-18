@@ -4,6 +4,15 @@
 // A $( document ).ready() block.
 $(document).ready(function () {
     console.log("ready!");
+	
+	//$('#picOneUpload').click(function(){
+	//	$('#img').css('height','250px');
+	//});
+	
+	$('input:file').change(function(){
+		$('#img').css('height','250px');
+	});
+
 
     // $("#uploadPost").on("click", function () {
     //    

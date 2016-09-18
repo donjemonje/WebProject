@@ -69,7 +69,7 @@ echo $_SESSION['session_id'];
             <div class="thumbnail" id="firstThumbnail" >
                 <div class="caption">
 
-                    <div style="height: 250px;">
+                    <div id="img" style="height: 50px;">
                         <ul style="list-style-type: none; overflow: hidden; display: inline;">
                             <li style="display: block; float: left;"><img id="userImg" src= <?php if (isset($_SESSION['userImg'])) echo $_SESSION['userImg']; else echo "../images/main/no-profile-pic.jpg"; ?> alt="..." width="40" align="left" style="max-height:100%"></li>
                             <input id="privacyImage" value="0" type="image" src="../images/main/Unlock-96.png" width="30" height="30" onclick="setPostPrivacy()" align="right">
@@ -81,7 +81,7 @@ echo $_SESSION['session_id'];
 
                     <div style="height: 30px;">
                         <ul style="list-style-type: none; overflow: hidden; display: inline;">
-                            <li style="display: block; float: left;"><input name="picOneUpload" type="file" accept="image/*" onchange="picUpload(this.files[0])" style="padding-top: 8px"></li>
+                            <li style="display: block; float: left;"><input id="picOneUpload" name="picOneUpload" type="file" accept="image/*" onchange="picUpload(this.files[0])" style="padding-top: 8px"></li>
                             <li style="display: block; float: right; padding-left: 16px; max-width: 490px ;max-height: 300px; ">
                                 <a id="myLink" title="Add" href="#" onclick="uploadPostClicked()" style="display: block;padding-right: 27px;padding-top: 8px;text-align:right";>Post</a>
                             </li>
