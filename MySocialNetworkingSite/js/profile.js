@@ -32,7 +32,7 @@ function uploadProfileImageClicked() {
     //TODO: add mail UI + logic
     var uploadImgJson = {
         "image": imgUrl,
-        "mail": "TDOD@gmail.com",
+        // "mail": "TDOD@gmail.com",
     };
     $.ajax({
         url:"../php/user.php",
@@ -40,7 +40,7 @@ function uploadProfileImageClicked() {
         data:{query: uploadImgJson},
         success:function(data)
         {
-
+            location.reload();
         }
     });
 }
