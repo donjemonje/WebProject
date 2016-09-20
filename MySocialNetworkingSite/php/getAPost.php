@@ -6,7 +6,7 @@
  * Time: 2:22 PM
  */
 
-	include 'getPosts.php';
+	include 'sharedPostLogic.php';
 
     if(session_status() != PHP_SESSION_ACTIVE){
         session_start();
