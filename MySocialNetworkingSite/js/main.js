@@ -122,10 +122,21 @@ function uploadPostClicked() {
                 });
 }
 
-function shareClicked() {
-    alert("implement Share");
-}
+function tapPostImage(postId) {
 
+    var modal = document.getElementById('myModal'+postId);
+
+    var img = document.getElementById('myImg'+postId);
+    var modalImg = document.getElementById("img"+postId);
+
+    modal.style.display = "block";
+    modalImg.src = img.src;
+    // captionText.innerHTML = this.alt;
+
+    modal.onclick = function() {
+        modal.style.display = "none";
+    }
+}
 
 function likeClicked(postId) {
     var postId = postId;
@@ -267,7 +278,10 @@ function createPostHtml(postJson, showPrivacy) {
         +'</div> <br>'
 
         /* post Image */
-        +'<img src='+postImgPath+' alt="..." align="center" style="max-width: 100%; max-height:100%">  '
+        +'<img id="myImg'+postId+'" src='+postImgPath+' alt="..s." align="center" style="max-width: 100%; max-height:100%" onclick="tapPostImage('+ postId +')">  '
+        +'<div id="myModal'+postId+'" class="modal"><img class="modal-content" id="img'+postId+'"> <div id="caption"></div> </div>'
+
+
 
         /* post Actions */
         +'<div style="padding-top: 0.3cm;"></div>'
@@ -276,7 +290,7 @@ function createPostHtml(postJson, showPrivacy) {
         +'<ul style="list-style-type: none; overflow: hidden; display: inline;">'
         +'<li style="display: block; float: left;"><input id='+postId+' type="image" src="../images/main/like_ic.jpg" width="30" height="30" onclick="likeClicked('+ postId +')"></li>'
         +'<li style="display: block; float: left; padding-left: 4px; padding-top: 8px;"><div id="numOfLikes'+postId+'">'+likeCount+'</div></li>'
-        +'<li style="display: block; float: left; padding-left: 14px; padding-top: 8px;"><a id="myLink" title="Share"href="#" onclick="shareClicked();return false;">Share</a></li>'
+        // +'<li style="display: block; float: left; padding-left: 14px; padding-top: 8px;"><a id="myLink" title="Share"href="#" onclick="shareClicked();return false;">Share</a></li>'
         +'</ul>'
         +'</div>'
 
@@ -331,3 +345,5 @@ function formattedDateStr(date) {
 
     return formatted;
 }
+
+
