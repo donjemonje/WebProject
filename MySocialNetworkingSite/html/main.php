@@ -105,7 +105,28 @@ echo $_SESSION['session_id'];
  $(document).ready(function(){
       $('#searchText').keyup(function(){
            var query = $(this).val();
-           if(query != '')
+           if(query == '*')
+           {
+                $.ajax({
+                     url:"../php/search.php",
+                     method:"POST",
+                     data:{query:query},
+                     success:function(data)
+                     {
+		
+                         var jsonData = JSON.parse(data);
+                         var htnlRes = "";
+                         for (var i = 0; i < jsonData.length; i++) {
+                             var counter = jsonData[i];
+                             htnlRes += '<option value='+ counter +'>';
+                         }
+                         $('#exampleList').html(htnlRes);
+
+
+                     }
+                });
+           }
+		   else if(query != '')
            {
                 $.ajax({
                      url:"../php/search.php",
