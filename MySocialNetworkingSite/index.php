@@ -30,7 +30,7 @@ if (isset($_POST['login-submit'])) {
 		header("location: html/main.php");
 		
 	}else {
-		$loginerror = $newPassword;
+		$loginerror = "Your Login Name or Password is invalid";
 	}
 }
 
