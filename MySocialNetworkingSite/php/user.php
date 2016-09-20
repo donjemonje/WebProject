@@ -12,6 +12,9 @@
     $userid = $_SESSION['session_id'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if(isset($_GET['query']['userId'])){
+        $userid = $_GET['query']['userId'];
+    }
     $userQuery = "SELECT * FROM user WHERE id LIKE  '%".$userid."%'";
 
     $user = array();

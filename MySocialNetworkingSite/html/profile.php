@@ -70,7 +70,7 @@ echo $_SESSION['session_id'];
                 </div>
 
 
-                <div style="height: 30px;">
+                <div id="imagesActions" style="height: 30px;">
                     <ul style="list-style-type: none; overflow: hidden; display: inline;">
                         <li style="display: block; float: left;"><input name="picOneUpload" type="file" accept="image/*" onchange="profilePicUpload(this.files[0])" style="padding-top: 8px"></li>
                         <li style="display: block; float: right; padding-left: 16px; max-width: 490px ;max-height: 300px; ">
@@ -95,10 +95,23 @@ echo $_SESSION['session_id'];
 <script>
     $(document).ready(function(){
 
+        var userId = null
+        if(parent.document.URL.includes("?")){
+            var userId = parent.document.URL.substring(parent.document.URL.indexOf('?'), parent.document.URL.length);
+            if(userId.length > 1){
+                userId =  userId.substring(userId.indexOf('?') + 1, userId.length);
+            }
+        }
+
+        var userParams = {};
+        if(userId != null){
+            userParams = {"userId" : userId};
+            document.getElementById("imagesActions").style.display = 'none';;
+        }
         $.ajax({
             url:"../php/user.php",
             method:"GET",
-            data:{},
+            data:{query:userParams},
             success:function(data)
             {
 
@@ -119,17 +132,26 @@ echo $_SESSION['session_id'];
             }
         });
 
+
+
+        var params;
+        if(userId != null){
+            params = {"type" : "me", "userId" : userId};
+        } else {
+            params = {"type" : "me"};
+        }
         $.ajax({
             url:"../php/getPosts.php",
             method:"POST",
-            data:{query:"me"},
+            data:{query:params},
             success:function(data)
             {
 				//alert(data);
                 var postsArr = JSON.parse(data);
                 for (var i = 0; i < postsArr.length; i++) {
                     var post = postsArr[i];
-                    var htmlWall = createPostHtml(post, true);
+
+                    var htmlWall = createPostHtml(post, userId == null);
                     $(htmlWall).insertAfter("#firstThumbnail");
                 }
 

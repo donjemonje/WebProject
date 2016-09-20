@@ -197,6 +197,10 @@ function addFriend() {
     //alert("implement search: --" + document.getElementById("searchText").value + "--");
 }
 
+function userNameClick(authorId) {
+    window.location.href = "profile.php?"+authorId;
+}
+
 /* Reload Data */
 
 function reloadPost(postId) {
@@ -230,6 +234,7 @@ function createPostHtml(postJson, showPrivacy) {
 
 
     /* Post Parsing*/
+    var authorId = postJson.authorId;
     var userName = postJson.userName;
     var postId = postJson.postid;
     var postIsPrivate = postJson.isPrivate == "true";
@@ -263,7 +268,8 @@ function createPostHtml(postJson, showPrivacy) {
         +'<div style="height: 40px">'
         +'<img src='+userImagePath+' alt="..."  width="40" align="left" style="max-height:100%">'
         +'<div style="padding-left: 1.2cm; max-height:100%">'
-        +userName
+        // +userName
+        +'<a href="#" onclick="userNameClick('+authorId+');return false;">'+userName+'</a>'
         +privacyHtml
         +'<br>'
         +postDate

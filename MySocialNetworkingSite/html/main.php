@@ -158,7 +158,7 @@ echo $_SESSION['session_id'];
         $.ajax({
             url:"../php/getPosts.php",
             method:"POST",
-            data:{query:"friends"},
+            data:{query:{"type" : "friends"}},
             success:function(data)
             {
 				//alert(data);
