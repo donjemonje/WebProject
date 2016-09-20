@@ -8,7 +8,7 @@
 		$output = array();
 		$usersArray = array();
 		$error = false;
-	if($_POST["query"] == "friends")  
+	if($_POST["query"]["type"] == "friends")
 	{
 		$friendsQuery = "SELECT * FROM friend WHERE id_1 LIKE '%".$_SESSION['session_id']."%'";  
 		$friendsResult = mysqli_query($db, $friendsQuery);
@@ -18,9 +18,13 @@
 		}
 		
 	}
-	elseif($_POST["query"] == "me")  
-	{	
-		$userQuery = "SELECT * FROM user WHERE id LIKE '%".$_SESSION['session_id']."%'";  
+	elseif($_POST["query"]["type"] == "me")
+	{
+		$userId =  $_SESSION['session_id'];
+		if(isset($_POST["query"]["userId"])){
+			$userId = $_POST["query"]["userId"];
+		}
+		$userQuery = "SELECT * FROM user WHERE id LIKE '%".$userId."%'";
 		$userResult = mysqli_query($db, $userQuery);
 		while($userRow = mysqli_fetch_array($userResult))  
 		{
@@ -94,6 +98,7 @@
 			'userName' => $user_data["userName"],
 			'userImagePath' => $user_data["userImage"],
 			'likeCount' => $postRow["likes"],
+			'authorId' => $postRow["author_id"],
 			'comments' => $comment_output,
 		);
 		return $post_data;
