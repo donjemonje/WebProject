@@ -33,15 +33,19 @@ echo $_SESSION['session_id'];
 <!-- top nav -->
 <div class="navbar navbar-blue navbar-static-top">
     <div class="navbar-header">
-        <a  class="navbar-brand logo">M&D</a>
+        <a class="navbar-brand logo" >M&D</a>
     </div>
+			
     <nav class="collapse navbar-collapse" role="navigation">
+
+
         <form class="navbar-form navbar-left" id="searchForm">
-            <div class="input-group input-group-sm" style="max-width:360px;">
-                <input type="text" class="form-control" placeholder="Search" name="searchText" id="searchText" autocomplete="off" value="" list="exampleList">
-                <datalist id="exampleList"></datalist>
-            </div>
-        </form>
+			<div class="input-group input-group-sm" style="max-width:360px;">
+				<input type="text" class="form-control" placeholder="Search" name="searchText" id="searchText" autocomplete="off" value="" list="exampleList">
+				<datalist id="exampleList"></datalist>
+			</div>	
+		</form>
+			
         <ul class="nav navbar-nav">
             <li>
                 <a href="#" onclick="addFriend()"><i class="glyphicon glyphicon-plus"></i></a>
@@ -63,6 +67,7 @@ echo $_SESSION['session_id'];
 <!-- /top nav -->
 
 <br><br><br>
+
     <div class="container">
         <div class="row">
             <!-- ************************************************* -->
@@ -103,10 +108,25 @@ echo $_SESSION['session_id'];
  <script>
 
  $(document).ready(function(){
+	 $('#searchText').change(function(){
+	     var con = $('#searchText').val();
+		 
+	    if(con.includes("*"))
+		{
+	        var _replace = $(this).val();
+			var res = _replace.replace("*", "");
+			$(this).val(res);	
+		}
+		
+	 
+	 });
+	 
       $('#searchText').keyup(function(){
+			
            var query = $(this).val();
-           if(query == '*')
-           {
+		   
+           if(query == '*' )
+           {	  
                 $.ajax({
                      url:"../php/search.php",
                      method:"POST",
@@ -118,16 +138,19 @@ echo $_SESSION['session_id'];
                          var htnlRes = "";
                          for (var i = 0; i < jsonData.length; i++) {
                              var counter = jsonData[i];
-                             htnlRes += '<option value='+ counter +'>';
+							 htnlRes += '<option value=*'+ counter +'>';
                          }
                          $('#exampleList').html(htnlRes);
 
 
                      }
                 });
+				
            }
-		   else if(query != '')
+		  
+		   else if(query != '' && query != '*')
            {
+		  
                 $.ajax({
                      url:"../php/search.php",
                      method:"POST",
@@ -139,9 +162,10 @@ echo $_SESSION['session_id'];
                          var htnlRes = "";
                          for (var i = 0; i < jsonData.length; i++) {
                              var counter = jsonData[i];
-                             htnlRes += '<option value='+ counter +'>';
+							 htnlRes += '<option value='+ counter +'>';
                          }
-                         $('#exampleList').html(htnlRes);
+						 $('#exampleList').html(htnlRes);
+
 
 
                      }
@@ -169,6 +193,33 @@ echo $_SESSION['session_id'];
                     var htmlWall = createPostHtml(post, false);
                     $(htmlWall).insertAfter("#firstThumbnail");
                 }
+
+            }
+        });
+
+    });
+</script>
+
+<script>
+    $(document).ready(function(){
+
+        $.ajax({
+            url:"../php/getUser.php",
+            method:"POST",
+            data:{query:""},
+            success:function(data)
+            {
+				//alert(data);
+			var userimage = JSON.parse(data);
+			if(userimage!=null)
+				
+				document.getElementById("userImg").src = userimage;
+                    //var post = postsArr[i];
+                   // var htmlWall = createPostHtml(post, false);
+                    //$(htmlWall).insertAfter("#firstThumbnail");
+					//userImg
+					else
+               document.getElementById("userImg").src = "../images/main/no-profile-pic.jpg";
 
             }
         });

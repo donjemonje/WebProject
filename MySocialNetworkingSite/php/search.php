@@ -27,7 +27,7 @@
 	}
 	else {
 		$output = array();
-		$query = "SELECT * FROM user WHERE username LIKE '%".$_POST["query"]."%'";  
+		$query = "SELECT * FROM user WHERE username LIKE '".$_POST["query"]."%'";  
 		$result = mysqli_query($db, $query);
 		if(mysqli_num_rows($result) > 0)
 		{  

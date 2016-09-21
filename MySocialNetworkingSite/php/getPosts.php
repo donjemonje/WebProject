@@ -42,8 +42,9 @@
 		{  
 			unset($postsQuery);
 			$postsQuery = "SELECT * FROM post WHERE author_id LIKE '".$user."'";
-			if($_POST["query"] == "friends"){
+			if($_POST["query"]["type"] == "friends"){
 				$postsQuery .= "AND isPrivate LIKE 0";
+				//echo $postsQuery;
 			}
 			$result = mysqli_query($db, $postsQuery);
 		

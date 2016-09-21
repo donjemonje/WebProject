@@ -145,15 +145,7 @@ if (isset($_POST['register-submit'])) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="text-center">
-                                                    <a href="javascript:alert('forgot-password');" tabindex="5" class="forgot-password">Forgot Password?</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </form>
                                 <form id="register-form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" role="form" style="display: none;">
 								
